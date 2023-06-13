@@ -281,7 +281,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				t.Errorf("Infra.OSNodes() = %v, want %v", got, tt.want)
 			}
 			if !i.IsOptimalShardCount() {
-				t.Errorf("Infra.OSNodes() does not have optimal shard, got %v and should be %v nodes based on optimal shard count", got, i.OSNodesCalculatedShards())
+				t.Errorf("Infra.OSNodes() does not have optimal shard, got %v and should be %v nodes based on optimal shard count", got, i.OSNodesOptimalShards())
 			}
 		})
 	}

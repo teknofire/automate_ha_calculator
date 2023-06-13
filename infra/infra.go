@@ -95,6 +95,10 @@ func (i Infra) OSNodesForShards(s int) float64 {
 
 // Calculate number of shards needed to ensure we limit shard size to no more than
 // 50gb per shard
+//
+// Typically we'll find that when the shard size goes above 30gb the search performance
+// will start to decrease but with a write heavy environment like we have in Automate going
+// up to 50gb per shard is better for write performance.
 func calcShards(data_per_day float64) int {
 	// Number of 50gb shards
 	shards := math.Ceil(data_per_day / 50)
@@ -142,12 +146,12 @@ func (i Infra) OSNodes() int {
 // If the default shard size doesn't match the number of shards we calculated then
 // the indicies won't have the optimal size and will likely be too large.
 func (i Infra) IsOptimalShardCount() bool {
-	return i.OSNodes() == i.OSNodesCalculatedShards()
+	return i.OSNodes() == i.OSNodesOptimalShards()
 }
 
 // Determine the number of OpenSearch nodes by calculating the optimal number of shards
-// necessary to keep shard size limited to no more than 30gb.
-func (i Infra) OSNodesCalculatedShards() int {
+// necessary to keep shard size limited to the optimal size.
+func (i Infra) OSNodesOptimalShards() int {
 	nodes := i.OSNodesForShards(i.CalculatedConvergeShardsTotal() + i.CalculatedComplianceShardsTotal())
 
 	// Make sure we always have an odd number of nodes

@@ -14,7 +14,7 @@ func printInfo(i infra.Infra) {
 	log.Infof("Total Shards: %d\n", i.TotalShards())
 	log.Infof("Optimal Shard Size?: %v\n", i.IsOptimalShardCount())
 	log.Infof("OS Nodes: %d\n", i.OSNodes())
-	log.Infof("OS Nodes w/ Optimal Shard Size: %d\n", i.OSNodesCalculatedShards())
+	log.Infof("OS Nodes w/ Optimal Shard Size: %d\n", i.OSNodesOptimalShards())
 }
 
 func main() {
