@@ -87,7 +87,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
-			want: 7,
+			want: 11,
 		},
 
 		{
@@ -105,7 +105,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
-			want: 3,
+			want: 5,
 		},
 		{
 			name: "50k_nodes_90_days",
@@ -156,7 +156,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
-			want: 7,
+			want: 11,
 		},
 		{
 			name: "50k_nodes_365_days_min_shards",
@@ -170,6 +170,23 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ConvergeIndicesPerDay:   2,
 				ComplianceIndicesPerDay: 2,
 				PrimaryShards:           2,
+				ReplicaShards:           1,
+				HeapPerNode:             32,
+			},
+			want: 5,
+		},
+		{
+			name: "100k_nodes_30_days",
+			fields: fields{
+				Nodes:                   100000,
+				ConvergesPerDay:         24,
+				ConvergeSizeMB:          0.5,
+				CompliancePerDay:        1,
+				ComplianceSizeMB:        4,
+				RetentionDays:           30,
+				ConvergeIndicesPerDay:   2,
+				ComplianceIndicesPerDay: 2,
+				PrimaryShards:           5,
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
@@ -224,7 +241,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
-			want: 7,
+			want: 11,
 		},
 		{
 			name: "100k_nodes_365_days_min_shards",
@@ -241,7 +258,7 @@ func TestInfra_OpenSearchNodes(t *testing.T) {
 				ReplicaShards:           1,
 				HeapPerNode:             32,
 			},
-			want: 3,
+			want: 5,
 		},
 	}
 	for _, tt := range tests {

@@ -21,8 +21,7 @@ func main() {
 	i := infra.New()
 	printInfo(i)
 
-	// i = infra.New()
-	i.Nodes = 100000
+	i.Nodes = 80000
 	i.RetentionDays = 90
 	printInfo(i)
 }

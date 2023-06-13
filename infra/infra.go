@@ -43,7 +43,7 @@ func CalculateDataSize(nodes int, perDay int, sizeMB float64, primary_shards int
 
 func New() Infra {
 	d := Infra{
-		Nodes:         80000,
+		Nodes:         10000,
 		RetentionDays: 30,
 
 		ConvergesPerDay:  24,
@@ -55,7 +55,7 @@ func New() Infra {
 		ComplianceIndicesPerDay: 2,
 		PrimaryShards:           5,
 		ReplicaShards:           1,
-		HeapPerNode:             30,
+		HeapPerNode:             32,
 	}
 
 	return d
@@ -66,9 +66,9 @@ func New() Infra {
 // in practice we find when we hit 80 shards/GB Heap is when we begin to see
 // performance issues with OS
 //
-// To ensure adequate wiggle room using 70 shards/GB Heap
+// To ensure adequate wiggle room using 50 shards/GB Heap
 func (i Infra) shardsPerNode() int {
-	return i.HeapPerNode * 70
+	return i.HeapPerNode * 50
 }
 
 // Calculate the total number of shards for the compliance indices for the retention period
@@ -94,10 +94,12 @@ func (i Infra) OSNodesForShards(s int) float64 {
 }
 
 // Calculate number of shards needed to ensure we limit shard size to no more than
-// 30gb per shard
+// 50gb per shard
 func calcShards(data_per_day float64) int {
-	shards := math.Ceil(data_per_day / 30)
-	return int(math.Max(shards, 5))
+	// Number of 50gb shards
+	shards := math.Ceil(data_per_day / 50)
+
+	return int(shards)
 }
 
 // Calculate how many primary shards we need for compliance data to maintain < 30gb shard size
